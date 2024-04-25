@@ -6,6 +6,7 @@ from openpyxl.styles import Border, Side
 import pandas as pd
 import os
 
+
 def select_file1():
     file_path = filedialog.askopenfilename()
     file_path_entry1.delete(0, "end")
@@ -36,8 +37,9 @@ def format_file(original_file_path: str, output_path: str):
                 f1.write(line)
 
     df = pd.read_csv('temp.csv', encoding='cp1252', delimiter=';')
-    df = df[['Order No.', 'Qtd', 'Valor', 'Lista Prç', 'Mercadoria', 'Nome Mercad.',
-             'Vend A', 'Nm Vend A', 'Data da Ord.', 'Núm OC Clnt', 'Núm OE', 'Status']]
+    df = df[['Order No.', 'Qtd', 'Valor', 'Mercadoria', 'Nome Mercad.',
+             'Vend A', 'Nm Vend A', 'Data da Ord.', 'Núm OC Clnt', 'Armazém', 'Núm OE', 'Status']]
+    df= df[~df["Status"].isin(["Saved", "Shipped Current"])]
     wb = Workbook()
     ws = wb.active
     for r in dataframe_to_rows(df, index=False, header=True):
